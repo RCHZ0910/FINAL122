@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<title>KAPE-TID KO | FAQ</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background: linear-gradient(135deg,#f6f1eb,#e8dcc8);
+color:#3e2723;
+padding:80px 20px;
+}
+
+/* TITLE */
+
+.title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.title h1{
+font-family:'Playfair Display',serif;
+font-size:48px;
+color:#4e342e;
+}
+
+.title p{
+color:#6b4f3f;
+margin-top:10px;
+font-size:16px;
+}
+
+/* FAQ SECTION */
+
+.faq-container{
+max-width:900px;
+margin:auto;
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.faq-item{
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(10px);
+border-radius:20px;
+padding:25px 30px;
+box-shadow:0 15px 35px rgba(0,0,0,0.1);
+border:1px solid rgba(215,168,110,0.3);
+transition:all .3s ease;
+}
+
+.faq-item:hover{
+transform:translateY(-5px);
+}
+
+.question{
+font-weight:600;
+font-size:18px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
+}
+
+.answer{
+margin-top:15px;
+line-height:1.7;
+color:#5d4037;
+display:none;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+margin-top:80px;
+color:#8b5e3c;
+font-size:14px;
+}
+
+.back-btn{
+  position: fixed; /* para dumikit sa screen */
+  top: 20px;
+  left: 20px;
+  background:#d7a86e;
+  color:#3e2723;
+  padding:10px 18px;
+  border-radius:25px;
+  text-decoration:none;
+  font-weight:600;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+  transition:all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000; /* para di matabunan */
+}
+
+.back-btn:hover{
+  background:#3e2723;
+  color:#fff;
+  transform:translateY(-2px);
+}
+@media (max-width: 600px){
+  .back-btn{
+    padding:8px 14px;
+    font-size:14px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<section id="faq">
+	<a href="main.html" class="back-btn"><span>←</span> Back</a>
+
+<div class="section-title-container reveal">
+
+<h2 class="section-title">Frequently Asked Questions</h2>
+
+<div class="title">
+<h1>☕ Frequently Asked Questions</h1>
+<p>Everything you need to know about KAPE-TID KO</p>
+</div>
+
+<div class="faq-container">
+
+<div class="faq-item">
+<div class="question">
+What time does KAPE-TID KO open?
+<span>+</span>
+</div>
+
+<div class="answer">
+Our coffee shop opens daily from <b>8:00 AM to 10:00 PM</b> in all branches.
+</div>
+</div>
+
+<div class="faq-item">
+<div class="question">
+Do you offer delivery services?
+<span>+</span>
+</div>
+
+<div class="answer">
+Yes! You can order through our partner delivery apps or visit the nearest branch.
+</div>
+</div>
+
+<div class="faq-item">
+<div class="question">
+What type of coffee beans do you use?
+<span>+</span>
+</div>
+
+<div class="answer">
+We proudly use locally sourced Filipino beans such as <b>Barako and Arabica</b>.
+</div>
+</div>
+
+<div class="faq-item">
+<div class="question">
+Do you provide free Wi-Fi?
+<span>+</span>
+</div>
+
+<div class="answer">
+Yes! All KAPE-TID KO branches provide free Wi-Fi for customers.
+</div>
+</div>
+
+<div class="faq-item">
+<div class="question">
+Can I reserve seats for meetings or study groups?
+<span>+</span>
+</div>
+
+<div class="answer">
+Yes. Small reservations are welcome. Please contact us through our main website.
+</div>
+</div>
+</div>
+
+<footer>
+<p>☕ KAPE-TID KO • Brewed with Love</p>
+</footer>
+
+<script>
+
+/* FAQ TOGGLE */
+
+const questions = document.querySelectorAll(".question");
+
+questions.forEach(q=>{
+q.addEventListener("click",()=>{
+
+const answer = q.nextElementSibling;
+
+if(answer.style.display === "block"){
+answer.style.display = "none";
+}else{
+answer.style.display = "block";
+}
+
+});
+});
+
+</script>
+
+</body>
+</html>

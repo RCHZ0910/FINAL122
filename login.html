@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>KAPE-TID KO | Login</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+background: linear-gradient(135deg,#f6f1eb,#e8dcc8);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+.container{
+width:350px;
+background:rgba(255,255,255,0.9);
+backdrop-filter:blur(10px);
+border-radius:20px;
+padding:30px;
+box-shadow:0 15px 35px rgba(0,0,0,0.1);
+border:1px solid rgba(215,168,110,0.3);
+}
+.title{text-align:center;margin-bottom:20px;}
+.title h1{font-family:'Playfair Display',serif;color:#4e342e;font-size:28px;}
+.title p{font-size:14px;color:#6b4f3f;}
+.input-group{margin-bottom:15px;}
+.input-group input{
+width:100%;
+padding:10px;
+border-radius:10px;
+border:1px solid #d7a86e;
+outline:none;
+}
+button{
+width:100%;
+padding:10px;
+border:none;
+border-radius:25px;
+background:#d7a86e;
+color:#3e2723;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+button:hover{background:#3e2723;color:white;}
+.toggle{
+text-align:center;
+margin-top:15px;
+font-size:14px;
+color:#6b4f3f;
+cursor:pointer;
+}
+.back-btn{
+position: fixed;
+top: 20px;
+left: 20px;
+background:#d7a86e;
+color:#3e2723;
+padding:10px 18px;
+border-radius:25px;
+text-decoration:none;
+font-weight:600;
+box-shadow:0 4px 15px rgba(0,0,0,0.2);
+display:flex;
+align-items:center;
+gap:8px;
+}
+</style>
+</head>
+
+<body>
+
+<a href="main.html" class="back-btn">← Back</a>
+
+<div class="container">
+
+<div class="title">
+<h1 id="formTitle">☕ Login</h1>
+<p id="formDesc">Welcome back to KAPE-TID KO</p>
+</div>
+
+<form id="form">
+
+<div class="input-group" id="nameField" style="display:none;">
+<input type="text" placeholder="Full Name" id="name">
+</div>
+
+<div class="input-group">
+<input type="email" placeholder="Email" id="email" required>
+</div>
+
+<div class="input-group">
+<input type="password" placeholder="Password" id="password" required>
+</div>
+
+<div class="input-group" id="serialField" style="display:none;">
+<input type="text" placeholder="Enter Owner Code (REQUIRED)" id="serial">
+</div>
+
+<button type="submit" id="submitBtn">Login</button>
+</form>
+
+<div class="toggle" onclick="toggleForm()">
+Don't have an account? Register
+</div>
+
+</div>
+
+<script>
+let isLogin = true;
+const VALID_SERIAL = "KAPETIDKO2026";
+
+function toggleForm(){
+  isLogin = !isLogin;
+
+  const title = document.getElementById("formTitle");
+  const desc = document.getElementById("formDesc");
+  const nameField = document.getElementById("nameField");
+  const serialField = document.getElementById("serialField");
+  const button = document.getElementById("submitBtn");
+  const toggleText = document.querySelector(".toggle");
+
+  if(!isLogin){
+    title.innerText = "☕ Register";
+    desc.innerText = "Create your KAPE-TID KO account";
+    nameField.style.display = "block";
+    serialField.style.display = "block";
+    button.innerText = "Register";
+    toggleText.innerText = "Already have an account? Login";
+  }else{
+    title.innerText = "☕ Login";
+    desc.innerText = "Welcome back to KAPE-TID KO";
+    nameField.style.display = "none";
+    serialField.style.display = "none";
+    button.innerText = "Login";
+    toggleText.innerText = "Don't have an account? Register";
+  }
+}
+
+const form = document.getElementById("form");
+
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const serial = document.getElementById("serial").value;
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  if(isLogin){
+    // LOGIN
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if(user){
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      localStorage.setItem("isOwner", JSON.stringify(user.isOwner));
+      alert("Login successful!");
+      window.location.href = "kape.html";
+    }else{
+      alert("Invalid login!");
+    }
+
+  } else {
+  
+
+    if(serial !== VALID_SERIAL){
+      alert("Invalid Owner Code! You cannot register.");
+      return;
+    }
+
+    if(users.find(u => u.email === email)){
+      alert("Email already registered!");
+      return;
+    }
+
+    let isOwner = true;
+
+    users.push({email, password, isOwner});
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Registered as OWNER!");
+    toggleForm();
+  }
+});
+</script>
+
+</body>
+</html>

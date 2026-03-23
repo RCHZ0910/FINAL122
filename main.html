@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>KAPE-TID KO | Premium Filipino Coffee</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins', sans-serif;
+}
+
+html{
+scroll-behavior: smooth;
+}
+
+body{
+background: linear-gradient(135deg, #f6f1eb 0%, #e8dcc8 100%);
+color:#3e2723;
+overflow-x: hidden;
+}
+
+/* LOADING ANIMATION */
+.loader{
+position: fixed;
+inset: 0;
+background: #3e2723;
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 9999;
+transition: opacity 0.5s, visibility 0.5s;
+}
+
+.loader.hidden{
+opacity: 0;
+visibility: hidden;
+}
+
+.cup{
+width: 80px;
+height: 60px;
+border: 4px solid #d7a86e;
+border-radius: 0 0 40px 40px;
+position: relative;
+animation: fill 2s infinite;
+}
+
+.cup::after{
+content: '';
+position: absolute;
+width: 20px;
+height: 35px;
+border: 4px solid #d7a86e;
+right: -28px;
+top: 5px;
+border-radius: 0 20px 20px 0;
+}
+
+.steam{
+position: absolute;
+top: -30px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 8px;
+}
+
+.steam span{
+width: 8px;
+height: 25px;
+background: #d7a86e;
+border-radius: 50%;
+animation: steam 1.5s infinite;
+opacity: 0;
+}
+
+.steam span:nth-child(1){ animation-delay: 0.2s; }
+.steam span:nth-child(2){ animation-delay: 0.4s; }
+.steam span:nth-child(3){ animation-delay: 0.6s; }
+
+@keyframes steam{
+0%{ transform: translateY(0) scale(1); opacity: 0; }
+50%{ opacity: 0.8; }
+100%{ transform: translateY(-20px) scale(1.5); opacity: 0; }
+}
+
+@keyframes fill{
+0%, 100%{ box-shadow: inset 0 0 0 0 #d7a86e; }
+50%{ box-shadow: inset 0 -30px 0 0 #d7a86e; }
+}
+
+/* FLOATING COFFEE BEANS BACKGROUND */
+.floating-beans{
+position: fixed;
+width: 100%;
+height: 100%;
+pointer-events: none;
+z-index: 0;
+overflow: hidden;
+}
+
+.bean{
+position: absolute;
+font-size: 24px;
+opacity: 0.1;
+animation: float 15s infinite linear;
+}
+
+@keyframes float{
+0%{ transform: translateY(100vh) rotate(0deg); opacity: 0; }
+10%{ opacity: 0.15; }
+90%{ opacity: 0.15; }
+100%{ transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+/* HEADER - GLASS MORPHISM */
+header{
+background: rgba(62, 39, 35, 0.95);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+color:white;
+padding:12px 50px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
+box-shadow:0 4px 30px rgba(0,0,0,0.3);
+border-bottom: 1px solid rgba(215, 168, 110, 0.3);
+transition: all 0.3s ease;
+}
+
+header.scrolled{
+padding: 8px 50px;
+background: rgba(62, 39, 35, 0.98);
+}
+
+.logo h2{
+font-family:'Playfair Display', serif;
+font-size:28px;
+letter-spacing:2px;
+color:#f5e6d3;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.logo img{
+width:60px;
+height:60px;
+border-radius:50%;
+object-fit:cover;
+display:block;
+cursor:pointer;
+border: 3px solid #d7a86e;
+transition: transform 0.3s ease;
+}
+
+.logo img:hover{
+transform: scale(1.1) rotate(5deg);
+}
+
+.logo-text{
+display:flex;
+flex-direction:column;
+}
+
+.est{
+font-size:11px;
+letter-spacing:3px;
+color:#d7a86e;
+font-weight:500;
+}
+
+nav{
+display: flex;
+align-items: center;
+gap: 5px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+font-size:14px;
+padding:10px 18px;
+border-radius:25px;
+transition:all 0.3s ease;
+position: relative;
+overflow: hidden;
+}
+
+nav a::before{
+content: '';
+position: absolute;
+bottom: 0;
+left: 50%;
+width: 0;
+height: 2px;
+background: #d7a86e;
+transition: all 0.3s ease;
+transform: translateX(-50%);
+}
+
+nav a:hover::before{
+width: 70%;
+}
+
+nav a:hover{
+color:#d7a86e;
+transform:translateY(-2px);
+}
+
+nav a.active{
+background: rgba(215, 168, 110, 0.2);
+color:#d7a86e;
+border: 1px solid rgba(215, 168, 110, 0.4);
+}
+
+/* HERO SECTION - MODERN GRADIENT */
+.hero{
+position:relative;
+padding:160px 40px 140px;
+text-align:center;
+color:white;
+overflow:hidden;
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+inset:0;
+background: linear-gradient(135deg, rgba(62,39,35,0.85) 0%, rgba(62,39,35,0.6) 50%, rgba(139, 94, 60, 0.4) 100%);
+z-index: 1;
+}
+
+.hero video{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-2;
+}
+
+.hero-content{
+position:relative;
+z-index: 2;
+max-width:900px;
+animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp{
+from{
+opacity: 0;
+transform: translateY(30px);
+}
+to{
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+.hero h1{
+font-size: clamp(40px, 8vw, 72px);
+margin-bottom:20px;
+font-family:'Playfair Display', serif;
+text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+animation: slideInLeft 1s ease;
+background: linear-gradient(135deg, #fff 0%, #d7a86e 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+@keyframes slideInLeft{
+from{
+opacity: 0;
+transform: translateX(-50px);
+}
+to{
+opacity: 1;
+transform: translateX(0);
+}
+}
+
+.hero p{
+font-size: clamp(16px, 2.5vw, 20px);
+color:#e5e7eb;
+max-width: 600px;
+margin: 0 auto 30px;
+line-height: 1.8;
+animation: fadeInUp 1s ease 0.3s backwards;
+}
+
+.hero-btn{
+display: inline-block;
+padding: 15px 40px;
+background: linear-gradient(135deg, #d7a86e 0%, #b8956a 100%);
+color: #3e2723;
+text-decoration: none;
+border-radius: 50px;
+font-weight: 600;
+font-size: 16px;
+transition: all 0.3s ease;
+box-shadow: 0 10px 30px rgba(215, 168, 110, 0.4);
+animation: fadeInUp 1s ease 0.6s backwards;
+border: 2px solid transparent;
+}
+
+.hero-btn:hover{
+transform: translateY(-3px) scale(1.05);
+box-shadow: 0 15px 40px rgba(215, 168, 110, 0.6);
+background: transparent;
+color: #d7a86e;
+border-color: #d7a86e;
+}
+
+/* SECTION STYLES */
+section{
+padding:100px 50px;
+position: relative;
+}
+
+/* FIXED SECTION TITLE - PERFECTLY CENTERED */
+.section-title-container{
+text-align: center;
+margin-bottom: 60px;
+width: 100%;
+}
+
+.section-title{
+display: inline-block;
+font-size: clamp(28px, 4vw, 42px);
+color:#4e342e;
+font-family:'Playfair Display', serif;
+position: relative;
+padding-bottom: 20px;
+}
+
+.section-title::after{
+content: '☕';
+position: absolute;
+bottom: 25px;
+left: 110%;
+transform: translateX(-50%);
+font-size: 40px;
+color: #d7a86e;
+}
+
+/* ABOUT SECTION - GLASS CARDS */
+.about-container{
+display:grid;
+grid-template-columns: 1fr 1fr;
+gap:60px;
+align-items: center;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.about-images{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+position: relative;
+}
+
+.about-images img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:20px;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+transition:all 0.4s ease;
+border: 3px solid transparent;
+}
+
+.about-images img:hover{
+transform:scale(1.05) rotate(2deg);
+box-shadow:0 30px 60px rgba(0,0,0,0.25);
+border-color: #d7a86e;
+z-index: 10;
+}
+
+.about-text{
+background: rgba(255, 255, 255, 0.7);
+backdrop-filter: blur(10px);
+padding: 40px;
+border-radius: 25px;
+box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+border: 1px solid rgba(215, 168, 110, 0.3);
+}
+
+.about-title{
+font-family:'Playfair Display', serif;
+font-size: clamp(28px, 3vw, 40px);
+color:#4e342e;
+margin-bottom:25px;
+line-height:1.3;
+}
+
+.tid{
+color:#d7a86e;
+font-style:italic;
+position: relative;
+}
+
+.story{
+color:#5d4037;
+font-size:16px;
+line-height:1.9;
+}
+
+/* TEAM SECTION - 3D CARDS */
+.team{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+margin-top:40px;
+max-width: 1400px;
+margin-left: auto;
+margin-right: auto;
+}
+
+.member{
+background: rgba(255, 255, 255, 0.8);
+backdrop-filter: blur(10px);
+padding:35px 25px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 15px 35px rgba(0,0,0,0.1);
+transition:all 0.4s ease;
+border: 1px solid rgba(215, 168, 110, 0.2);
+position: relative;
+overflow: hidden;
+}
+
+.member::before{
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+transition: left 0.5s;
+}
+
+.member:hover::before{
+left: 100%;
+}
+
+.member:hover{
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 25px 50px rgba(0,0,0,0.15);
+border-color: rgba(215, 168, 110, 0.5);
+}
+
+.member-avatar{
+width:100px;
+height:100px;
+border-radius:50%;
+margin-bottom:20px;
+object-fit:cover;
+border: 4px solid #d7a86e;
+box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+transition: transform 0.3s ease;
+}
+
+.member:hover .member-avatar{
+transform: scale(1.1);
+}
+
+.member h4{
+font-size: 20px;
+color: #3e2723;
+margin-bottom: 8px;
+font-weight: 600;
+}
+
+.member p{
+color: #8b5e3c;
+font-size: 14px;
+font-weight: 500;
+}
+
+/* MENU GRID - MODERN GLASS CARDS */
+#coffees{
+background: linear-gradient(180deg, #f6f1eb 0%, #fff 100%);
+position: relative;
+}
+
+.menu-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+gap:35px;
+margin-top:40px;
+max-width: 1400px;
+margin-left: auto;
+margin-right: auto;
+}
+
+.menu-card{
+position:relative;
+border-radius:25px;
+overflow:hidden;
+height:300px;
+text-decoration:none;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+border: 2px solid transparent;
+}
+
+.menu-card img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:all 0.5s ease;
+}
+
+.menu-card-overlay{
+position:absolute;
+inset:0;
+background: linear-gradient(to top, rgba(62,39,35,0.9) 0%, rgba(62,39,35,0.4) 50%, transparent 100%);
+display:flex;
+flex-direction: column;
+align-items:center;
+justify-content:flex-end;
+padding-bottom: 40px;
+transition:all 0.4s ease;
+}
+
+.menu-card h3{
+color:#fff;
+font-size:32px;
+font-family:'Playfair Display', serif;
+letter-spacing:2px;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+transform: translateY(20px);
+transition: transform 0.4s ease;
+}
+
+.menu-card p{
+color: #d7a86e;
+font-size: 14px;
+margin-top: 10px;
+opacity: 0;
+transform: translateY(20px);
+transition: all 0.4s ease 0.1s;
+}
+
+.menu-card:hover{
+transform:translateY(-15px) scale(1.02);
+box-shadow:0 30px 60px rgba(0,0,0,0.3);
+border-color: #d7a86e;
+}
+
+.menu-card:hover img{
+transform:scale(1.15);
+}
+
+.menu-card:hover .menu-card-overlay{
+background: linear-gradient(to top, rgba(62,39,35,0.95) 0%, rgba(62,39,35,0.6) 100%);
+}
+
+.menu-card:hover h3,
+.menu-card:hover p{
+transform: translateY(0);
+opacity: 1;
+}
+
+/* BRANCHES - GLASS CARDS */
+#branches{
+background: linear-gradient(135deg, #3e2723 0%, #5d4037 100%);
+color: white;
+position: relative;
+}
+
+#branches .section-title{
+color: #f5e6d3;
+}
+
+#branches .section-title::after{
+color: #d7a86e;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+margin-top:40px;
+max-width: 1400px;
+margin-left: auto;
+margin-right: auto;
+}
+
+.card{
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(10px);
+padding:35px;
+border-radius:20px;
+box-shadow:0 15px 35px rgba(0,0,0,0.2);
+text-align:center;
+border: 1px solid rgba(255, 255, 255, 0.2);
+transition: all 0.4s ease;
+position: relative;
+overflow: hidden;
+}
+
+.card::after{
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: radial-gradient(circle, rgba(215,168,110,0.1) 0%, transparent 70%);
+opacity: 0;
+transition: opacity 0.4s;
+}
+
+.card:hover::after{
+opacity: 1;
+}
+
+.card:hover{
+transform: translateY(-10px);
+background: rgba(255, 255, 255, 0.15);
+box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+border-color: rgba(215, 168, 110, 0.4);
+}
+
+.card h3{
+margin-bottom:20px;
+color:#d7a86e;
+font-size: 22px;
+font-weight: 600;
+}
+
+.card p{
+color:#e5e7eb;
+font-size: 15px;
+line-height: 1.6;
+margin-bottom: 8px;
+}
+
+/* TESTIMONIALS - ENHANCED */
+#ratings{
+background: #f6f1eb;
+}
+
+.testimonial-card .stars {
+    color: #d7a86e !important; /* same gold as your theme */
+    text-shadow: 0 2px 8px rgba(215,168,110,0.5);
+}
+
+.testimonial-card .review {
+    color: #3e2723 !important; /* rich coffee brown */
+    opacity: 1;
+}
+
+.testimonial-card{
+background: rgba(255, 255, 255, 0.9);
+backdrop-filter: blur(10px);
+border-radius:25px;
+padding:40px 30px;
+box-shadow:0 15px 35px rgba(0,0,0,0.08);
+transition:all 0.4s ease;
+border: 1px solid rgba(215, 168, 110, 0.2);
+text-align: center;
+}
+
+.testimonial-card:hover{
+transform:translateY(-15px) scale(1.03);
+box-shadow:0 25px 50px rgba(0,0,0,0.15);
+border-color: rgba(215, 168, 110, 0.4);
+}
+
+.profile-circle{
+width:80px;
+height:80px;
+border-radius:50%;
+background: linear-gradient(135deg, #d7a86e 0%, #b8956a 100%);
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+font-size:28px;
+margin:0 auto 20px;
+box-shadow: 0 10px 20px rgba(215, 168, 110, 0.4);
+transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover .profile-circle{
+transform: scale(1.1) rotate(10deg);
+}
+
+.profile-circle.jd{
+background: linear-gradient(135deg, #8b5e3c 0%, #6d4c41 100%);
+}
+
+.profile-circle.mr{
+background: linear-gradient(135deg, #d946ef 0%, #c026d3 100%);
+}
+
+.profile-circle.ks{
+background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.stars{
+color:#fbbf24;
+font-size:22px;
+margin-bottom:15px;
+letter-spacing: 3px;
+}
+
+.review {
+    font-style: italic;
+    color: #3e2a1f; /* darker coffee brown */
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: 1; /* make sure it's not faded */
+}
+.testimonial-card h4{
+color: #3e2723;
+font-size: 20px;
+margin-bottom: 5px;
+}
+
+.testimonial-card small{
+color: #8b5e3c;
+font-size: 13px;
+font-weight: 500;
+}
+
+/* CONTACT - MODERN GLASS FORM */
+#contact{
+background: linear-gradient(135deg, #f6f1eb 0%, #e8dcc8 100%);
+position: relative;
+}
+
+.contact-wrapper{
+display:flex;
+gap:50px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:40px;
+max-width: 1200px;
+margin-left: auto;
+margin-right: auto;
+}
+
+.contact-info{
+max-width:400px;
+background: rgba(255, 255, 255, 0.8);
+backdrop-filter: blur(10px);
+padding:40px;
+border-radius:25px;
+box-shadow:0 20px 40px rgba(0,0,0,0.1);
+border: 1px solid rgba(215, 168, 110, 0.3);
+transition: transform 0.4s ease;
+}
+
+.contact-info:hover{
+transform: translateY(-5px);
+}
+
+.contact-info h3{
+font-family:'Playfair Display', serif;
+margin-bottom:20px;
+color:#3e2723;
+font-size: 28px;
+}
+
+.contact-info p{
+margin-bottom:15px;
+color:#6b4f3f;
+line-height:1.8;
+font-size: 15px;
+}
+
+.contact-info strong{
+color: #d7a86e;
+}
+
+.contact-form{
+max-width:450px;
+width:100%;
+background: rgba(255, 255, 255, 0.9);
+backdrop-filter: blur(10px);
+padding:40px;
+border-radius:25px;
+box-shadow:0 20px 40px rgba(0,0,0,0.1);
+border: 1px solid rgba(215, 168, 110, 0.3);
+}
+
+.contact-form input,
+.contact-form textarea{
+width:100%;
+padding:15px 20px;
+margin-bottom:20px;
+border-radius:15px;
+border:2px solid #e0e0e0;
+outline:none;
+transition:all 0.3s ease;
+font-size: 15px;
+background: rgba(255, 255, 255, 0.8);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+border-color:#d7a86e;
+box-shadow:0 0 0 4px rgba(215,168,110,0.1);
+background: white;
+}
+
+.contact-form textarea{
+resize: vertical;
+min-height: 120px;
+}
+
+.contact-form button{
+width:100%;
+background: linear-gradient(135deg, #d7a86e 0%, #b8956a 100%);
+color:#3e2723;
+border:none;
+padding:16px;
+border-radius:15px;
+font-weight:600;
+font-size: 16px;
+cursor:pointer;
+transition:all 0.3s ease;
+box-shadow: 0 10px 25px rgba(215, 168, 110, 0.4);
+}
+
+.contact-form button:hover{
+background: linear-gradient(135deg, #3e2723 0%, #5d4037 100%);
+color:#fff;
+transform:translateY(-2px);
+box-shadow: 0 15px 35px rgba(215, 168, 110, 0.5);
+}
+
+/* FOOTER */
+footer{
+text-align:center;
+padding:50px 20px;
+background:#3e2723;
+color:#f5e6d3;
+margin-top:0;
+font-size:14px;
+position: relative;
+}
+
+footer::before{
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 3px;
+background: linear-gradient(90deg, transparent, #d7a86e, transparent);
+}
+
+/* DROPDOWN */
+.dropdown {
+position: relative;
+display: inline-block;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(10px);
+min-width: 200px;
+box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+border-radius: 15px;
+overflow: hidden;
+top: 50px;
+z-index: 1000;
+border: 1px solid rgba(215, 168, 110, 0.3);
+animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn{
+from{ opacity: 0; transform: translateY(-10px); }
+to{ opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-content a {
+color: #3e2723;
+padding: 14px 20px;
+display: block;
+text-decoration: none;
+font-size: 14px;
+font-weight: 500;
+transition: all 0.3s ease;
+}
+
+.dropdown-content a:hover {
+background: linear-gradient(135deg, #d7a86e 0%, #b8956a 100%);
+color: white;
+padding-left: 25px;
+}
+
+.dropdown-content.show {
+display: block;
+}
+
+/* SCROLL REVEAL ANIMATION */
+.reveal{
+opacity: 0;
+transform: translateY(50px);
+transition: all 0.8s ease;
+}
+
+.reveal.active{
+opacity: 1;
+transform: translateY(0);
+}
+
+/* CUSTOM SCROLLBAR */
+::-webkit-scrollbar{
+width: 12px;
+}
+
+::-webkit-scrollbar-track{
+background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb{
+background: linear-gradient(135deg, #d7a86e 0%, #b8956a 100%);
+border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+background: linear-gradient(135deg, #b8956a 0%, #8b5e3c 100%);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 968px){
+.about-container{
+grid-template-columns: 1fr;
+gap: 40px;
+}
+
+.about-images{
+order: 2;
+}
+
+.about-text{
+order: 1;
+}
+
+section{
+padding: 70px 20px;
+}
+
+header{
+padding: 12px 20px;
+}
+
+nav a{
+padding: 8px 12px;
+font-size: 13px;
+}
+}
+
+@media (max-width: 640px){
+.team{
+grid-template-columns: 1fr;
+}
+
+.menu-grid{
+grid-template-columns: 1fr;
+}
+
+.cards{
+grid-template-columns: 1fr;
+}
+
+.contact-wrapper{
+flex-direction: column;
+align-items: center;
+}
+
+.dropdown-content{
+position: fixed;
+top: 70px;
+left: 20px;
+right: 20px;
+width: auto;
+}
+}
+
+/* FLOATING ACTION BUTTON */
+.fab{
+position: fixed;
+bottom: 30px;
+right: 30px;
+width: 60px;
+height: 60px;
+background: linear-gradient(135deg, #d7a86e 0%, #b8956a 100%);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-size: 24px;
+box-shadow: 0 10px 30px rgba(215, 168, 110, 0.5);
+cursor: pointer;
+transition: all 0.3s ease;
+z-index: 999;
+border: none;
+}
+
+.fab:hover{
+transform: scale(1.1) rotate(90deg);
+box-shadow: 0 15px 40px rgba(215, 168, 110, 0.6);
+}
+
+/* SHINE EFFECT */
+.shine{
+position: relative;
+overflow: hidden;
+}
+
+.shine::before{
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+transform: rotate(45deg);
+transition: all 0.6s;
+opacity: 0;
+}
+
+.shine:hover::before{
+animation: shine 0.6s ease-in-out;
+}
+
+@keyframes shine{
+0%{ transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+50%{ opacity: 1; }
+100%{ transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+}
+.hero-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(135deg, rgba(62,39,35,0.85) 0%, rgba(62,39,35,0.6) 50%, rgba(139, 94, 60, 0.4) 100%);
+  z-index: 0; /* FIXED */
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING ANIMATION -->
+<div class="loader" id="loader">
+<div class="cup">
+<div class="steam">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+
+<!-- FLOATING COFFEE BEANS -->
+<div class="floating-beans" id="beansContainer"></div>
+
+<header id="header">
+
+<div class="logo">
+<img src="kapetid.png" alt="Coffee Logo">
+<div class="logo-text">
+<h2>KAPE-TID KO</h2>
+<span class="est">EST. 2026</span>
+</div>
+</div>
+
+<nav>
+<a href="#home" class="active">Home</a>
+</div>
+<a href="#about">About</a>
+<div class="dropdown">
+<a href="javascript:void(0)" id="coffeeBtn">Menu ▾</a>
+<div class="dropdown-content" id="coffeeMenu">
+<a href="kape.html">☕ Coffee</a>
+<a href="milkti.html">🧋 Milktea</a>
+<a href="des.html">🍰 Desserts</a>
+<a href="spays.html">💭 ADDS ON</a>
+<a href="cbf.html"> ©️ BEST SELLER</a>
+<a href="combo.html"> ©️ COMBO MEAL</a>
+</div>
+<a href="#branches">Branches</a>
+<a href="#ratings">Reviews</a>
+<a href="#contact">Contact</a>
+<a href="join.html">Join Our Team!</a>
+<a href="faq.html">FAQ</a>
+<a href="login.html">LOGIN/REGISTER</a>
+</nav>
+
+</header>
+
+<section class="hero" id="home">
+  <img src="bgcoffee.jpg" alt="background" class="hero-bg">
+  <div class="hero-content">
+<h1>Welcome to<br>KAPE-TID KO</h1>
+<p>Experience the warmth of Filipino hospitality in every cup. We serve locally sourced, expertly roasted coffee that feels like home.</p>
+<a href="#coffees" class="hero-btn shine">Explore Our Menu ☕</a>
+</div>
+</section>
+
+<section id="about">
+
+<!-- FIXED: Section Title Container -->
+<div class="section-title-container reveal">
+<h2 class="section-title">Our Story</h2>
+</div>
+
+<div class="about-container">
+
+<div class="about-images reveal">
+<img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400&h=500&fit=crop" alt="Coffee">
+<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop" alt="Coffee Beans">
+<img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?w=400&h=300&fit=crop" alt="Coffee Cup">
+<img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=500&fit=crop" alt="Coffee Shop">
+</div>
+
+<div class="about-text reveal">
+<h2 class="about-title">
+Brewed with Love,<br>
+Served with <span class="tid">Tid</span>
+</h2>
+<p class="story">
+"Kape-tid" is a play on words combining "Kape" (coffee) and "Tid" (time/rest). Founded in 2024, we started with a simple mission: to create a space where people can pause, breathe, and enjoy quality coffee.
+<br><br>
+Every bean is carefully selected from local Filipino farmers, roasted to perfection, and brewed with precision. We believe that great coffee is not just about taste — it's about the experience, the ambiance, and the connections made over a cup.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="team">
+<!-- FIXED: Section Title Container -->
+<div class="section-title-container reveal">
+<h2 class="section-title">Our Leadership Team</h2>
+</div>
+
+<div class="team">
+
+<div class="member reveal">
+<div class="member-avatar" style="background: linear-gradient(135deg, #8b5e3c, #d7a86e); width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: bold;">R</div>
+<h4>Rezano</h4>
+<p>Chief Executive Officer</p>
+</div>
+
+<div class="member reveal">
+<div class="member-avatar" style="background: linear-gradient(135deg, #2563eb, #1d4ed8); width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: bold;">G</div>
+<h4>Gian</h4>
+<p>Operations Manager</p>
+</div>
+
+<div class="member reveal">
+<div class="member-avatar" style="background: linear-gradient(135deg, #d946ef, #c026d3); width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: bold;">J</div>
+<h4>Paulo</h4>
+<p>Head Barista</p>
+</div>
+
+<div class="member reveal">
+<div class="member-avatar" style="background: linear-gradient(135deg, #ea580c, #c2410c); width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: bold;">C</div>
+<h4>Clark</h4>
+<p>Marketing Manager</p>
+</div>
+
+<div class="member reveal">
+<div class="member-avatar" style="background: linear-gradient(135deg, #059669, #047857); width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 36px; font-weight: bold;">M</div>
+<h4>Miguel</h4>
+<p>Supply Chain Manager</p>
+</div>
+
+</div>
+</section>
+
+<section id="coffees">
+<!-- FIXED: Section Title Container -->
+<div class="section-title-container reveal">
+<h2 class="section-title">Our Menu</h2>
+</div>
+
+<div class="menu-grid">
+
+<a href="kape.html" class="menu-card reveal">
+<img src="coffeepic.jpeg" alt="Coffee">
+<div class="menu-card-overlay">
+<h3>Coffee</h3>
+<p>Artisan blends & single origin</p>
+</div>
+</a>
+
+<a href="milkti.html" class="menu-card reveal">
+<img src="milkteapic.jpg" alt="Milktea">
+<div class="menu-card-overlay">
+<h3>Milktea</h3>
+<p>Refreshing tea creations</p>
+</div>
+</a>
+
+<a href="des.html" class="menu-card reveal">
+<img src="dessertpic.jpg" alt="Desserts">
+<div class="menu-card-overlay">
+<h3>Desserts</h3>
+<p>Sweet perfect pairings</p>
+</div>
+</a>
+
+<a href="spays.html" class="menu-card reveal">
+<img src="condimentspic.jpg" alt="Condiments">
+<div class="menu-card-overlay">
+<h3>Condiments</h3>
+<p>Enhance your experience</p>
+</div>
+</a>
+
+</div>
+</section>
+
+<section id="branches">
+<!-- FIXED: Section Title Container -->
+<div class="section-title-container reveal">
+<h2 class="section-title">Our Branches</h2>
+</div>
+
+<div class="cards">
+
+<div class="card reveal">
+<h3>📍 Pasig Main</h3>
+<p>45 Market Ave, Kapitolyo, Pasig City</p>
+<p>📞 0917-123-4567</p>
+<p>⭐ Flagship Store</p>
+</div>
+
+<div class="card reveal">
+<h3>📍 Ortigas Branch</h3>
+<p>Ruby Rd, Ortigas Center, Pasig City</p>
+<p>📞 0918-234-5678</p>
+<p>⭐ Business District</p>
+</div>
+
+<div class="card reveal">
+<h3>📍 Rosario Branch</h3>
+<p>Market Market PALENGKE, Pasig City</p>
+<p>📞 0919-345-6789</p>
+<p>⭐ Local Favorite</p>
+</div>
+
+<div class="card reveal">
+<h3>📍 Santolan Branch</h3>
+<p>Marcos Highway, Santolan, Pasig City</p>
+<p>📞 0920-456-7890</p>
+<p>⭐ Newest Location</p>
+</div>
+
+</div>
+</section>
+
+<section id="ratings">
+<!-- FIXED: Section Title Container -->
+<div class="section-title-container reveal">
+<h2 class="section-title">What Our Customers Say</h2>
+</div>
+
+<div class="cards">
+
+<div class="card testimonial-card reveal">
+<div class="profile-circle jd">JD</div>
+<p class="stars">★★★★★</p>
+<p class="review">"The best Barako coffee I've tasted! Perfect place to relax and work. The ambiance is unmatched!"</p>
+<h4>Juan Dela Cruz</h4>
+<small>Regular Customer • 2 years</small>
+</div>
+
+<div class="card testimonial-card reveal">
+<div class="profile-circle mr">MR</div>
+<p class="stars">★★★★★</p>
+<p class="review">"Their Spanish Latte is addicting! Highly recommended! Staff are super friendly too."</p>
+<h4>Maria Reyes</h4>
+<small>Food Blogger • 50K followers</small>
+</div>
+
+<div class="card testimonial-card reveal">
+<div class="profile-circle ks">KS</div>
+<p class="stars">★★★★★</p>
+<p class="review">"Cozy atmosphere and friendly staff. My favorite coffee spot for studying!"</p>
+<h4>Karla Santos</h4>
+<small>Student • UAP</small>
+</div>
+
+</div>
+</section>
+
+<section id="contact">
+<!-- FIXED: Section Title Container -->
+<div class="section-title-container reveal">
+<h2 class="section-title">Get in Touch</h2>
+</div>
+
+<div class="contact-wrapper">
+
+<div class="contact-info reveal">
+<h3>☕ Visit KAPE-TID KO</h3>
+<p>We'd love to hear from you! Whether it's feedback, inquiries, or just sharing your coffee moments — feel free to reach out.</p>
+
+<p><strong>📍 Location:</strong> Pasig City, Philippines</p>
+<p><strong>📞 Phone:</strong> 0917-123-4567</p>
+<p><strong>📧 Email:</strong> kapetidko@email.com</p>
+<p><strong>⏰ Hours:</strong> 8:00 AM – 10:00 PM Daily</p>
+
+<div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(215,168,110,0.3);">
+<small style="color: #8b5e3c;">Follow us on social media!</small>
+<p style="margin-top: 10px; font-size: 20px;">📷 🐦 📘</p>
+</div>
+</div>
+
+<form class="contact-form reveal" id="contactForm">
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+<input type="text" id="firstName" placeholder="First Name" required pattern="[A-Za-z\s]+" title="Letters only">
+<input type="text" id="lastName" placeholder="Last Name" required pattern="[A-Za-z\s]+" title="Letters only">
+</div>
+
+<input type="email" id="email" placeholder="Your Email" required
+pattern="[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)"
+title="Use a valid email (gmail, yahoo, outlook only)">
+
+<input type="tel" id="phone" placeholder="Phone Number (optional)" pattern="[0-9]{11}" title="11 digits">
+
+<select style="width:100%; padding:15px 20px; margin-bottom:20px; border-radius:15px; border:2px solid #e0e0e0; outline:none; font-size: 15px; background: rgba(255,255,255,0.8); color: #666;">
+<option value="">Select Inquiry Type</option>
+<option value="feedback">Feedback</option>
+<option value="reservation">Reservation</option>
+<option value="franchise">Franchise Opportunity</option>
+<option value="others">Others</option>
+</select>
+
+<textarea id="message" rows="5" placeholder="Write your message..." required></textarea>
+
+<button type="submit" class="shine">Send Message ☕</button>
+
+<small style="color:#9ca3af; display: block; text-align: center; margin-top: 15px;">We usually reply within 24 hours. ☕</small>
+
+</form>
+
+</div>
+</section>
+
+<footer>
+<p style="font-size: 28px; margin-bottom: 15px;">☕</p>
+<p style="font-size: 24px; font-family: 'Playfair Display', serif; margin-bottom: 10px;">KAPE-TID KO</p>
+<p style="font-size:16px; color:#d7a86e; margin-bottom: 8px; font-weight: 500;">
+Brewed with Love. Served with Comfort.
+</p>
+<p style="font-size:13px; color:#a1887f; margin-bottom: 20px;">
+Experience every sip — where coffee meets relaxation.
+</p>
+<p style="font-size:12px; color:#8d6e63;">
+© 2026 KAPE-TID KO. All rights reserved. | Made with ❤️ in Pasig City
+</p>
+</footer>
+
+<!-- FLOATING ACTION BUTTON -->
+<button class="fab" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})" title="Contact Us">
+☕
+</button>
+
+<script>
+// LOADING ANIMATION
+window.addEventListener('load', () => {
+setTimeout(() => {
+document.getElementById('loader').classList.add('hidden');
+}, 1500);
+});
+
+// FLOATING COFFEE BEANS GENERATOR
+const beansContainer = document.getElementById('beansContainer');
+const coffeeEmojis = ['☕', '🫘', '🌰'];
+
+for(let i = 0; i < 15; i++){
+const bean = document.createElement('div');
+bean.className = 'bean';
+bean.textContent = coffeeEmojis[Math.floor(Math.random() * coffeeEmojis.length)];
+bean.style.left = Math.random() * 100 + '%';
+bean.style.animationDuration = (Math.random() * 10 + 10) + 's';
+bean.style.animationDelay = Math.random() * 5 + 's';
+bean.style.fontSize = (Math.random() * 20 + 15) + 'px';
+beansContainer.appendChild(bean);
+}
+
+// HEADER SCROLL EFFECT
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+if(window.scrollY > 50){
+header.classList.add('scrolled');
+} else {
+header.classList.remove('scrolled');
+}
+});
+
+// DROPDOWN
+const coffeeBtn = document.getElementById('coffeeBtn');
+const coffeeMenu = document.getElementById('coffeeMenu');
+
+coffeeBtn.addEventListener('click', (e) => {
+e.stopPropagation();
+coffeeMenu.classList.toggle('show');
+});
+
+window.addEventListener('click', (e) => {
+if(!coffeeBtn.contains(e.target)){
+coffeeMenu.classList.remove('show');
+}
+});
+
+// SCROLL REVEAL ANIMATION
+const revealElements = document.querySelectorAll('.reveal');
+
+const revealOnScroll = () => {
+revealElements.forEach(element => {
+const elementTop = element.getBoundingClientRect().top;
+const windowHeight = window.innerHeight;
+const revealPoint = 150;
+
+if(elementTop < windowHeight - revealPoint){
+element.classList.add('active');
+}
+});
+};
+
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+
+// ACTIVE NAV LINK
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+window.addEventListener('scroll', () => {
+let current = '';
+sections.forEach(section => {
+const sectionTop = section.offsetTop - 100;
+const sectionHeight = section.clientHeight;
+if(scrollY >= sectionTop && scrollY < sectionTop + sectionHeight){
+current = section.getAttribute('id');
+}
+});
+
+navLinks.forEach(link => {
+link.classList.remove('active');
+if(link.getAttribute('href') === '#' + current){
+link.classList.add('active');
+}
+});
+});
+
+// ENHANCED FORM SUBMISSION
+document.getElementById('contactForm').addEventListener('submit', function(e){
+e.preventDefault();
+
+const firstName = document.getElementById('firstName').value.trim();
+const lastName = document.getElementById('lastName').value.trim();
+const email = document.getElementById('email').value.trim();
+const message = document.getElementById('message').value.trim();
+
+const nameRegex = /^[A-Za-z\s]+$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/;
+
+if(!nameRegex.test(firstName) || !nameRegex.test(lastName)){
+alert("Names must contain letters only!");
+return;
+}
+
+if(!emailRegex.test(email)){
+alert("Email must be gmail, yahoo, or outlook!");
+return;
+}
+
+if(message.length < 10){
+alert("Please write a longer message (at least 10 characters).");
+return;
+}
+
+// SUCCESS WITH STYLE
+const btn = this.querySelector('button');
+const originalText = btn.textContent;
+btn.textContent = '✓ Sent Successfully!';
+btn.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
+
+setTimeout(() => {
+alert("☕ Thank you " + firstName + "! Your message has been sent successfully! We'll get back to you within 24 hours.");
+this.reset();
+btn.textContent = originalText;
+btn.style.background = '';
+}, 500);
+});
+
+// SMOOTH SCROLL FOR ALL LINKS
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function(e){
+e.preventDefault();
+const target = document.querySelector(this.getAttribute('href'));
+if(target){
+target.scrollIntoView({
+behavior: 'smooth',
+block: 'start'
+});
+}
+});
+});
+
+// PARALLAX EFFECT FOR HERO
+window.addEventListener('scroll', () => {
+const scrolled = window.pageYOffset;
+const heroVideo = document.querySelector('.hero video');
+if(heroVideo){
+heroVideo.style.transform = `translateY(${scrolled * 0.5}px)`;
+}
+});
+</script>
+
+</body>
+</html>
